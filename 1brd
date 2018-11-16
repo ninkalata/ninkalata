@@ -1,0 +1,74 @@
+package com.demo.training;
+import java.util.Scanner;
+	//Calculate the Installment Amount of a loan
+     public class EmiCalculator {
+		
+//Calculates the EMI for a given Loan
+		static float getEMI(float loanAmount,float rateofInterest, float tenure,  float NoofInstallments)
+		{
+         rateofInterest=rateofInterest/100;
+	    float emiNumerator=loanAmount*rateofInterest/NoofInstallments;
+        float emidenominator1=(float) Math.pow((1+((rateofInterest / NoofInstallments))),tenure);
+		float emidenominator2=1/emidenominator1;
+		 float emi=(float)Math.round((emiNumerator/(1-emidenominator2))*100/100);
+		return emi;
+}
+
+		void repaymentSchedule(float emii,float loanAmount,float rateofInterest, float tenure, float NoofInstallments)
+		{ 
+			// Loops for each installment.
+			System.out.println("******The Repayment Schedule for the entire loan period************");
+			int j;
+			float outstandingPrincipal[]=new float[100];
+			float principalComponent[]=new float[100];
+			float interestRate[]=new float[100];
+			outstandingPrincipal[1]=loanAmount;
+System.out.println("#.no\tOutstanding\t\tInterest\t\t" + "Principal\t\t" + "EMI\t");
+			for(j=1;j<=NoofInstallments;j++)
+			{	
+				interestRate[j]=(outstandingPrincipal[j]*(rateofInterest/(NoofInstallments*100)));
+				principalComponent[j]=emii-interestRate[j];
+				outstandingPrincipal[j+1]=outstandingPrincipal[j]-principalComponent[j];
+			
+				System.out.println(j + "\t" + outstandingPrincipal[j] + "\t\t" + interestRate[j] + "\t\t"+ principalComponent[j] + "\t\t" + emii);
+			}
+		Scanner	sc = new Scanner(System.in);
+			System.out.println("enter the Installmentnumber");
+			int output=sc.nextInt();
+			int g=output;
+			if(g==output)
+			{
+				System.out.println(g + "\t" + outstandingPrincipal[g] + "\t\t" + interestRate[g] + "\t\t"+ principalComponent[g] + "\t\t" + emii);
+
+				 System.out.println("****THANKYOU*****");
+					
+			}
+		}
+			
+			public static void main(String[] args) { 
+			Scanner sc = new Scanner(System.in);
+	System.out.println("****Run program to calculate EMI for*****");
+			System.out.println("Original Loan Principal Amount:"+"Rs");
+			float loanAmount=sc.nextFloat();
+			System.out.println(loanAmount);
+			System.out.println("Interest Rate:");
+			float rateofInterest=sc.nextFloat();
+			System.out.println(rateofInterest+"%");
+			System.out.println("Tenure:");
+			float tenure=sc.nextFloat();
+			System.out.println(tenure+"month");
+			float NoofInstallments=sc.nextFloat();
+			System.out.println(NoofInstallments);
+			 EmiCalculator mi=new EmiCalculator();
+	        float emii=EmiCalculator.getEMI(loanAmount,rateofInterest,tenure,NoofInstallments);
+		 System.out.println("the Installment Amount of a loan :  Rs "+emii);
+		 mi. repaymentSchedule(emii,loanAmount,rateofInterest,tenure,NoofInstallments);
+			
+			
+			
+			
+			}
+			
+		   
+}
+     
