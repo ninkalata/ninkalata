@@ -1,14 +1,22 @@
 package com.demo.training;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import jdk.internal.dynalink.beans.StaticClass;
+
 public class Repository {
 
-	public static Connection getConnection() {
-		Connection connection = null;
+	static  Connection connection=null;
+	{
 		try {
 			// Load the driver
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -17,30 +25,33 @@ public class Repository {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return connection;
+	
 	}
 
-	public static boolean validateLogin(String userId, String password, String type) {
+
+	public static boolean validateLogin(String userId, String password, String usertype) {
 		try {
-			Connection connection = getConnection();
+			
 			Statement statement = connection.createStatement();
 			// Execute a Query
-			String query =  "select count(*) from lata_login_table where user_id='"+ userId + "' and password ='"+ password + "',' and user_type = '"+ type + "'";
-			ResultSet resultSet = statement.executeQuery(query);
-			resultSet.next();
-			//System.out.println(loginResult.getInt(1));
-			if (resultSet.getInt(1) == 0) {
-				return false;
-			} 
-			return true;
-			
+			String query = "select count(*) from lata_login_table where user_id='" + userId + "' and password ='"
+					+ password + "' and user_type = '" + usertype + "'";
+
+			System.out.println(query);
+			ResultSet loginResult = statement.executeQuery(query);
+			// Iterate through the result set and display the records.
+			loginResult.next();
+			System.out.println("Valid Login!");
+			System.out.println(loginResult.getInt(1));
+			if (loginResult.next()) {
+				if (loginResult.getInt(1) > 0)
+					return true;
+			}
 		} catch (Exception exception) {
 			System.out.println("Error validating in db : " + exception);
 		}
 		return false;
+
 	}
 
 }
-
-
-
