@@ -9,14 +9,4 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-<!--   <servlet>
-    <description></description>
-    <display-name>maker</display-name>
-    <servlet-name>maker</servlet-name>
-    <servlet-class>com.demo.training.login</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>maker</servlet-name>
-    <url-pattern>/maker</url-pattern>
-  </servlet-mapping> -->
 </web-app>
